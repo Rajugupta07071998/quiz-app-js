@@ -1,206 +1,459 @@
 <!doctype html>
+{% load static %}
 <html lang="en">
   <head>
     <!-- Required meta tags - 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 -->
     <meta charset="utf-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+y
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <title>quiz_app_project</title>
   </head>
   <body>
+<div class="container-fluid  " id="signup-id" style="background-color:lightgray">
+    <a class="btn btn-primary float-right my-2" href="{% url 'app1:logoutpage' %}">Logout</a>
 
-<div class='container-fluid text-center'>
-<h1 class='question'>  here questions  ?</h1>
-<input type='radio' name='answer_1' id='ans1' class='answer'> 
-<label for='ans1' id='option1'>answer option1</label> 
-<br>
-<input type='radio' name='answer_1' id='ans2' class='answer'>
-<label for='ans2' id='option2'>answer option2</label>
-<br>
-<input type='radio' name='answer_1'id='ans3' class='answer'>
-<label for='ans3' id='option3'>answer option3</label> 
-<br>
-<input type='radio' name='answer_1' id='ans4' class='answer'>
-<label for='ans4' id='option4'>answer option4</label>
-<br>
+    <hr> 
+    <div class="col-sm-4 card">
+        <div class="card-body">
+            <h1 class="card-title"> <b>Player details then start game </b></h1><hr class="border-dark">
+            <br>
+        <form action="" id="form-id" class="card-form" >
+            <label for="fname"><h3>First name:</h3></label><br>
+            <input type="text" id="fname" name="fname" class="form-control" required><br>
+            <label for="lname"><h3>Last name:</h3></label><br>
+            <input type="text" id="lname" name="lname" class="form-control" required><br><br>
+            <label><h3>Gender  : </h3></label><br>
+            <select id="gender" class="form-control" required>
+                <option></option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            <!-- <input type="radio" name="gender">Male
+            <input type="radio" name="gender">Female-->
+            <br><br>
+            <h3> Date of Birth :</h3>
+            <input type="text" id="date" class="form-control" required><br><br>
+            <input type="submit" value="Start Quiz" class="btn btn-success btn-lg">
+        </form> </div>
+    </div>
+    <div class="col-sm-8">
+        <img src="{% static 'app1/images/quiz_image.jpg' %}">
 
-<input type='submit' value='Next Question'id='submit'>
+    </div>
+
+ </div>
+
+<div class='container-fluid text-center '  style="background-color:lightgray" id="quiz-id">
+    <a class="btn btn-primary float-right" href="{% url 'app1:logoutpage' %}">Logout</a>
+    <h1 > <b> Quiz App Using JavaScript</b></h1>
+
+    <hr>
+    <div class="row">
+        <div class="col-sm-8 border-right border-dark">
+            <h2 > <b> Progress Report</b></h2>
+
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" height="20px" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                </div>
+                <br><br>
+            </div>
+            <h1 class='question'>  here questions  ?</h1>
+            <div id="radio">pppppppppppppppppppp</div>
+            <br>
+            <input type='submit' value='Previous Question' id='previoussubmit' class="btn btn-success btn-lg my-3 float-left ">
+        <input type='submit' value='Next Question' id='submit' class="btn btn-success btn-lg my-3 float-right">
+
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+            <h3>  <b>  Player Name :</b></h3>
+            <h3 id="firstname">First Name :-  </h3>
+            <h3 id="lastname">Last Name :-  </h3>
+            <h3 id="gendername">Gender :-</h3>
+            <h3 id="datename">Date of Birth :-</h3><br><br><br>
+            <a href=""  value="Play Again" onclick="location.reload()" class=" my-3 float-bottom">RESTART  GAME   </a>
+         </div>
+        </div>
+    </div>
+        </div>
+
+<div class="container-fluid bg text-center text-danger " style="background-color:lightgray">
 </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
-    <script>
-const QuizDB=[
-{
-    question: "1)  What is 2+2= ?",
-    a: "4",
-    b: "5",
-    c: "6",
-    d: "7",
-    ans: "ans1"
-},
-{
-    question: "2)  What is 2+3= ?",
-    a: "4",
-    b: "5",
-    c: "6",
-    d: "7",
-    ans: "ans2"
-},
-{
-    question: "3)  What is 2+4= ?",
-    a: "4",
-    b: "5",
-    c: "6",
-    d: "7",
-    ans: "ans3"
-},
-{
-    question: "4)  What is 2+5= ?",
-    a: "4",
-    b: "5",
-    c: "6",
-    d: "7",
-    ans: "ans4"
-},
-{
-    question: "5)  What is 2+7= ?",
-    a: "4",
-    b: "5",
-    c: "6",
-    d: "9",
-    ans: "ans4"
-},
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" &times; data-dismiss="modal"></button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <h1 class="text-center">Your Obtained Marks
+            <div id="showscore" class="bg-info" ></div>
+
+        </h>
+            <br>
+        <div class="container-fluid text-center" style="background-color:lightgray" id="result-id">
+            <label style="color:black">Total Questions    </label>
+            <span id="totalquestion"></span>
+            <br>
+            <label style="color:green">correct Questions    </label>
+            <span id="correctquestion"></span>
+            <br>
+            <label style="color:red">wrong Questions    </label>
+            <span id="wrongquestion"></span>
+            <br>
+            <label style="color:blue">Skip Questions    </label>
+            <span id="skipquestion"></span>
+            <br>
+           
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script>
+$("#quiz-id").hide()
+const QuizDB = [
+    {
+        question: "1)  What is 2+2= ?",
+        correct_answer_values: [
+            "4"
+        ],
+        options_list: [
+            {
+                "display_text": 'Four',
+                'value': '4'
+            },
+            {
+                "display_text": 'Five',
+                'value': '5'
+            },
+            {
+                "display_text": 'Six',
+                'value': '6'
+            },
+            {
+                "display_text": 'Seven',
+                'value': '7'
+            }
+        ],
+        status: 'Skip'
+    },
+    {
+        question: "2)  What is sqrt of 4= ?",
+        correct_answer_values: [
+            "2", "-2"
+        ],
+        options_list: [
+            {
+                "display_text": 'Two',
+                'value': '2'
+            },
+            {
+                "display_text": 'Five',
+                'value': '5'
+            },
+            {
+                "display_text": 'Minus Two',
+                'value': '-2'
+            },
+            {
+                "display_text": 'Seven',
+                'value': '7'
+            }
+        ],
+        status: 'Skip'
+
+    },
+    {
+        question: "3)  What is 2+4= ?",
+        correct_answer_values: [
+            "6"
+        ],
+        options_list: [
+            {
+                "display_text": 'Four',
+                'value': '4'
+            },
+            {
+                "display_text": 'Five',
+                'value': '5'
+            },
+            {
+                "display_text": 'Six',
+                'value': '6'
+            },
+            {
+                "display_text": 'Seven',
+                'value': '7'
+            }
+        ],
+        status: 'Skip'
+    },
+    {
+        question: "4)  What is 2+5= ?",
+        correct_answer_values: [
+            "7"
+        ],
+        options_list: [
+            {
+                "display_text": 'Four',
+                'value': '4'
+            },
+            {
+                "display_text": 'Five',
+                'value': '5'
+            },
+            {
+                "display_text": 'Six',
+                'value': '6'
+            },
+            {
+                "display_text": 'Seven',
+                'value': '7'
+            }
+        ],
+        status: 'Skip'
+    },
+    {
+        question: "5)  What is 1+9= ?",
+        correct_answer_values: [
+            "10"
+        ],
+        options_list: [
+            {
+                "display_text": 'Four',
+                'value': '4'
+            },
+            {
+                "display_text": 'Five',
+                'value': '5'
+            },
+            {
+                "display_text": 'Six',
+                'value': '11'
+            },
+            {
+                "display_text": 'ten',
+                'value': '10'
+            }
+        ],
+        status: 'Skip'
+    },
+    /*} {
+        question: "2)  What is 2+3= ?",
+        lst: [5, 6, 7],
+        ans: "5"
+    },
+    {
+        question: "3)  What is 2+4= ?",
+        lst: [9, 5, 6, 7],
+        ans: "6"
+    },
+    {
+        question: "4)  What is 2+5= ?",
+        lst: [3, 9, 5, 6, 7],
+        ans: "7"
+    },
+    {
+        question: "5)  What is 2+0= ?",
+        lst: [4, 9, 5, 6, 2],
+        ans: "2"
+    } */
+
 ]
-
-$(document).ready(function(){
 var questtioncount=0;
-let score=0;
+
+function getresult(){
+    let score=0;
+    let skip=0;
+    let wrong=0;
+    
+    for (var q of QuizDB){
+        if(q.status=='correct'){
+            score++;
+        }
+        else if(q.status=='wrong'){
+            wrong++;
+        }
+        else{
+            skip++;
+        }
+    }
+    console.log(score,wrong,skip)
+    $("#totalquestion").text(QuizDB.length)
+    $("#correctquestion").text(score)
+    $("#wrongquestion").text(wrong)
+    $("#skipquestion").text(skip)
+    $("#showscore").text("Your score : "+score+"/"+QuizDB.length)
+
+    $("#result-id").show();
+    $("#modell").show()
+
+}
 const answers=document.querySelectorAll(".answer") //array 
 const submit=document.querySelector("#submit")
+const psubmit=document.querySelector("#previoussubmit")
+var date=  $("#date").datepicker( {defaultDate: ''}
+);
+var gndr=$("#gender").select2()
 
-const loadQuestion = ()=>{
-     let questionlist=QuizDB[questtioncount]
-        console.log("load question number", questtioncount)
-        $(".question").text(questionlist.question)
-        $("#option1").text(questionlist.a)
-        $("#option2").text(questionlist.b)
-        $("#option3").text(questionlist.c)
-        $("#option4").text(questionlist.d)
-}
-
-loadQuestion();
-
-const getcheckanswer= ()=>{
-    let answer;
-    answers.forEach((currentans) =>{
-        if (currentans.checked){
-            answer=currentans.id;
-        }
-    });
-    return answer;
-}
-
-submit.addEventListener('click', ()=>{
-    let checkanswer=getcheckanswer();
-    if (QuizDB[questtioncount] && checkanswer == QuizDB[questtioncount].ans){
-        console.log("id check   ")
-        score++;
-        console.log("score     "+score)
-
-    };
-    questtioncount++;
-
-    if (questtioncount < QuizDB.length){
-        loadQuestion();
-
-    };
-
-});
-   
+$("#form-id").submit(function(e){
+    var f=$("#fname").val()
+    $("#firstname").text(f)
+    var l=$("#lname").val()
+    $("#lastname").text(l)
+    var g=$("#gender").val()
+    $("#gendername").text(g)
+    var d= $("#date").val()
+    $("#datename").text(d)
+    $("#signup-id").hide()
+    $("#quiz-id").show()
+    e.preventDefault();
 })
 
 
+//this function to used loadquestion
+const loadQuestion = ()=>{
+    $("#modell").hide()
+    if(questtioncount == 0){
+        $("#result-id").hide();
+        // $("#modell").hide();
+    }
+    if (questtioncount==0){
+        $("#previoussubmit").hide()
+    }else{
+        $("#previoussubmit").show()
+    }
+    let questionlist=QuizDB[questtioncount];
+    let q=questionlist.question;
+    let option_list = questionlist.options_list;
+    let answer_values = questionlist.correct_answer_values;
+    $("#radio").empty();
+    for(var op of option_list){
+        console.log("op => ", op)
+    }
+    for(var i=0; i<option_list.length;i++){
+        if (answer_values.length === 1) {
+            // Logic to display radio button
+                $(".question").text(q)
+                let option_txt = `<input type='radio' name='answer_1' value='${option_list[i]['value']}' class='answer' class='float-left'> 
+                <label for='ans1' id='option1'>${option_list[i]['display_text']}</label><br/>`
+                $("#radio").append(option_txt)
+            
+        } else {
+            // Logic to display checkbox
+            $(".question").text(q)
+            let option_txt = `<input type='checkbox' name='answer_11' value='${option_list[i]['value']}' class='answer1' class='float-left'> 
+            <label for='ans1' id='option1'>${option_list[i]['display_text']}</label><br/>`
+            $("#radio").append(option_txt)
+        }
+    }
+    
+}     
+loadQuestion();
 
-       /*   $("#submit").click(function(){
-            answers.forEach(correctans)=>{
-                if (correctans.checked){
-                    console.log("right")
-                
+    const deselect = () =>{
+        answers.forEach((currentans) =>{currentans.checked = false;})
+    }
+
+    //this function to use previous button
+    $("#previoussubmit").click(function(){
+        questtioncount-=1;
+       
+        $("#submit").val("Next Question")
+        $(".progress-bar").css("width", String((questtioncount)*100/QuizDB.length)+'%')
+        loadQuestion();
+    })
+
+
+    const getcheckanswer= (correct_answer)=>{
+        // check checkbox value
+        let flag_value=false
+        if(correct_answer.length>1){
+           
+            var checkboxvalue = $("input[name=answer_11]:checked")
+            if (checkboxvalue.length==0){
+                return 'skip';
+            }
+            var list=[]
+            for(var i=0;i<checkboxvalue.length;i++){
+                var  x = $(checkboxvalue[i]).val()
+                list.push(x)
+            }
+            if(list.length==correct_answer.length){
+                for(var i=0;i<correct_answer.length;i++){
+                var index=correct_answer.indexOf(list[i])
+                    if(index<0){
+                        flag_value=false;  
+                        break
+                    }else{
+                        flag_value=true
+                    }
                 }
             }
-
-
-       /* var a=$('input[name=answer_'+i+']:checked').val()
-        console.log(a);
-        if (a==QuizDB[i].ans){
-            console.log("right")
-            score+=1;
+           return flag_value ? "correct" : "wrong"
+        }else{
+            //check radio button value
+            let selected_answer = $('.answer:checked')
+            if(selected_answer.length==0){
+                return 'skip';
+            }
+            var c=selected_answer.val()
+            if( c == correct_answer){
+                return 'correct'
+            }else{
+                return 'wrong'
+            }
         }
-       // var x=$(".answer"):checked.val()
-        //console.log(x)
-
-        });
-  };
-       
-
-       
-   // })
-
-
-});
-
-
-/*
-const question=document.querySelector(".question")
-const a=document.querySelector("#option1")
-const b=document.querySelector("#option2")
-const c=document.querySelector("#option3")
-const d=document.querySelector("#option4")
-const submit=document.querySelector("#submit")
-const answers=document.querySelectorAll(".answer") //array 
-
-console.log(QuizDB[0]);
-
-let questionCount=0;
-let score=0;
-const loadquestion = () => {
-    question.innerText=QuizDB[questionCount].question;
-    option1.innerText=QuizDB[questionCount].a;
-    option2.innerText=QuizDB[questionCount].b;
-    option3.innerText=QuizDB[questionCount].c;
-    option4.innerText=QuizDB[questionCount].d;
-}
-loadquestion();
-
-const getcheckanswer= ()=>{
-let answer;
-answers.forEach(currans)=>{
-  
-    if (currans.checked){
-        answer=currans.id;
     }
-}
-return answer;
+//this function to used next question and show answer
+$('#submit').click(function(e){
+    if(questtioncount >= QuizDB.length){
+        getresult()
+        $("#myModal").modal('show')
 
-}
+        return false
+    }
+    
+        
 
-submit.addEventListener('click', ()=>{
-const checkanswer= getcheckanswer();
-
-if (checkanswer==QuizDB[questionCount].ans){
-    score++
-}
-})*/
-
-
+    let current_question = QuizDB[questtioncount];
+    let checkanswer=getcheckanswer(current_question.correct_answer_values);
+    $(".progress-bar").css("width", String((questtioncount+1)*100/QuizDB.length)+'%')
+    QuizDB[questtioncount]['status'] = checkanswer
+    $("#radio").html("")
+    questtioncount++;
+    deselect()
+    if (questtioncount < QuizDB.length){
+        loadQuestion();
+        if (questtioncount == 4){
+            $("#submit").val("SHOW RESULT")
+        }
+    }
+});
+    
     </script>
   </body>
 </html>

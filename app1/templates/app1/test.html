@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <title>Hello,test   world!</title>
+  </head>
+  <body>
+<div class="container-fluid bg-primary " id="d1">
+    <p id="question-id">here question now ? </p>
+    <ol id="option-id"></ol>
+    <input type="submit" id="previous-id" value="Previous Question" class="btn btn-success float-left">
+
+    <input type="submit" id="submit-id" value="next Question" class="btn btn-success float-right">
+</div>
+<h1 id="score-id" class=text-center> </h1>
+
+
+
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    
+<script>
+const Quis_list = [
+{
+    question: "1) what is capital of india ?",
+    correct_answer: "Delhi",
+    option_list: ["Delhi","lakhnow","punjab"],
+    status: 'skip'
+},
+
+{
+    question: "2) what is capital of UP ?",
+    correct_answer: "Lakhnow",
+    option_list: ["delhi","Lakhnow","punjab"],
+    status: 'skip'
+},
+{
+    question: "3) what is capital of punjab ?",
+    correct_answer: "Chandigarh",
+    option_list: ["delhi","mumbai","Chandigarh"],
+    status: 'skip'
+}
+]
+var count=0;
+var score=0;
+$("#previous-id").hide()
+
+function getresult(){
+  let correct=0;
+  let wrong=0;
+  let skip=0;
+  for(var obj of Quis_list){
+    if (obj.status=='correct'){
+      return correct++;
+    }else if (obj.status=='wrong'){
+      return wrong++;
+    }else{
+      return skip++;
+    }
+  }
+}
+
+const loadquestion = ()=>{
+  let questionlist=Quis_list[count];
+  let question=questionlist.question
+  let correct_answer=questionlist.correct_answer
+  let option_list=questionlist.option_list
+  let status=questionlist.status
+
+  for(var i=0; i<option_list.length; i++){
+    $("#question-id").text(question)
+    $("#option-id").append(`<li><input type="radio" name="option_1" class="option" value="${option_list[i]}"> <label>${option_list[i]}</label></li>`)
+  }
+}
+loadquestion();
+
+const getcheckanswer = (correct_answer)=>{
+  let select_answer=$(".option:checked")
+  if(select_answer.length==0){
+    return 'skip'
+  }
+  let select_value=select_answer.val()
+  console.log("------------------------",select_value)
+  if( correct_answer==select_value){
+    return 'correct'
+  }else{
+    return 'wrong';
+  }
+}
+
+
+$("#submit-id").click(function(){
+  if (count<Quis_list.length){
+    let questionlist=Quis_list[count]
+    let check=getcheckanswer(questionlist.correct_answer)
+    questionlist.status=check
+    if (check){
+      score+=1;
+    }
+    $("#question-id").html("")
+    $("#option-id").html("")
+    count++;
+    $("#previous-id").show()
+
+    loadquestion();
+  }else{
+    $("#submit-id").val("Final Submit")
+    $("#score-id").text("Your score is "+score)
+  }
+})
+
+$("#previous-id").click(function(){
+  count-=1;
+  $("#question-id").html("")
+  $("#option-id").html("")
+  loadquestion();
+
+})
+
+</script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+#for Rakshita ma'am
+# Domain bakertaylor
+-- CREATE TABLE dbo.User_SwipeDetail_bakertaylor(
+--  DEVICECODE [VARCHAR](50) NULL,
+--  DEVICENAME [VARCHAR](50) NULL,
+--  EMPCODE [VARCHAR](50) NULL,
+--  LOGDATETIME [datetime] NULL,
+--  IsProcessed BIT NOT NULL DEFAULT 0,
+--  RECEIVEDON [datetime] DEFAULT(GETDATE())
+-- );
+-- CREATE LOGIN bakertaylor_admin WITH PASSWORD = 'Bakertaylor!234',
+-- DEFAULT_DATABASE = biometricsattendance
+-- CREATE USER [bakertaylor_admin] FOR LOGIN [bakertaylor_admin]
+-- GRANT SELECT ON OBJECT::dbo.User_SwipeDetail_bakertaylor TO
+-- bakertaylor_admin;
+-- GRANT INSERT ON OBJECT::dbo.User_SwipeDetail_bakertaylor TO
+-- bakertaylor_admin;
+-- CREATE INDEX index_for_isProcessed_EMPCODE ON
+-- User_SwipeDetail_bakertaylor(IsProcessed, EMPCODE);
+
+
+#for shilpa ma'am
+#Domain name: inr
+CREATE TABLE dbo.User_SwipeDetail_inr(
+ DEVICECODE [VARCHAR](50) NULL,
+ DEVICENAME [VARCHAR](50) NULL,
+ EMPCODE [VARCHAR](50) NULL,
+ LOGDATETIME [datetime] NULL,
+ IsProcessed BIT NOT NULL DEFAULT 0,
+ RECEIVEDON [datetime] DEFAULT(GETDATE())
+);
+CREATE LOGIN inr_admin WITH PASSWORD = 'Inr!234',
+DEFAULT_DATABASE = biometricsattendance
+CREATE USER [inr_admin] FOR LOGIN [inr_admin]
+GRANT SELECT ON OBJECT::dbo.User_SwipeDetail_inr TO
+inr_admin;
+GRANT INSERT ON OBJECT::dbo.User_SwipeDetail_inr TO
+inr_admin;
+CREATE INDEX index_for_isProcessed_EMPCODE ON
+User_SwipeDetail_inr(IsProcessed, EMPCODE);
+
+
+
+10/2/23
+#for shilpa ma'am
+#Domain name: progressoresearch
+CREATE TABLE dbo.User_SwipeDetail_progressoresearch(
+ DEVICECODE [VARCHAR](50) NULL,
+ DEVICENAME [VARCHAR](50) NULL,
+ EMPCODE [VARCHAR](50) NULL,
+ LOGDATETIME [datetime] NULL,
+ IsProcessed BIT NOT NULL DEFAULT 0,
+ RECEIVEDON [datetime] DEFAULT(GETDATE())
+);
+CREATE LOGIN progressoresearch_admin WITH PASSWORD = 'Progressoresearch!234',
+DEFAULT_DATABASE = biometricsattendance
+CREATE USER [progressoresearch_admin] FOR LOGIN [progressoresearch_admin]
+GRANT SELECT ON OBJECT::dbo.User_SwipeDetail_progressoresearch TO
+progressoresearch_admin;
+GRANT INSERT ON OBJECT::dbo.User_SwipeDetail_progressoresearch TO
+progressoresearch_admin;
+CREATE INDEX index_for_isProcessed_EMPCODE ON
+User_SwipeDetail_progressoresearch(IsProcessed, EMPCODE);
+
+
