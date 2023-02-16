@@ -26,6 +26,8 @@ urlpatterns = [
     path('getdata',views.get_data,name='get_datapage'),
     path('postdata',views.post_data,name='post_datapage'),
     path('test',views.test,name='testpage'),
+    path('quizpy',views.quizpy,name='quizpypage'),
+
 
 
 

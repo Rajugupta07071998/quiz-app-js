@@ -1,33 +1,25 @@
+{% extends 'app1/base.html' %}
+{% block content %}
+
 <!doctype html>
 {% load static %}
-<html lang="en">
-  <head>
-    <!-- Required meta tags - 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 -->
-    <meta charset="utf-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-y
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <title>quiz_app_project</title>
-  </head>
-  <body>
-<div class="container-fluid  " id="signup-id" style="background-color:lightgray">
+  <body class=" alert alert-info  ">
+<div class="container-fluid   alert alert-info" id="signup-id" style="background-color: alert alert-info">
     <a class="btn btn-primary float-right my-2" href="{% url 'app1:logoutpage' %}">Logout</a>
 
     <hr> 
-    <div class="col-sm-4 card">
+    <div class="row">
+    <div class="col-md-4 ">
         <div class="card-body">
             <h1 class="card-title"> <b>Player details then start game </b></h1><hr class="border-dark">
             <br>
-        <form action="" id="form-id" class="card-form" >
-            <label for="fname"><h3>First name:</h3></label><br>
+        <form action="" id="form-id" class="card-form" enctype="multipart/form-data">
+            <label for="fname"><h5>First name:</h5></label><br>
             <input type="text" id="fname" name="fname" class="form-control" required><br>
-            <label for="lname"><h3>Last name:</h3></label><br>
-            <input type="text" id="lname" name="lname" class="form-control" required><br><br>
-            <label><h3>Gender  : </h3></label><br>
+            <label for="lname"><h5>Last name:</h5></label><br>
+            <input type="text" id="lname" name="lname" class="form-control" required><br>
+            <label><h5>Gender  : </h5></label><br>
             <select id="gender" class="form-control" required>
                 <option></option>
                 <option value="Male">Male</option>
@@ -36,27 +28,31 @@ y
             <!-- <input type="radio" name="gender">Male
             <input type="radio" name="gender">Female-->
             <br><br>
-            <h3> Date of Birth :</h3>
-            <input type="text" id="date" class="form-control" required><br><br>
+            <h5> Date of Birth :</h5>
+            <input type="text" id="date" class="form-control" required><br>
+            <h5> Upload your photo here :</h5>
+            <input type="file" class="form-control"  accept="image/*" name="image" id="file"  onchange="loadFile(event)">
+            <br>
+            <br>
             <input type="submit" value="Start Quiz" class="btn btn-success btn-lg">
         </form> </div>
     </div>
-    <div class="col-sm-8">
-        <img src="{% static 'app1/images/quiz_image.jpg' %}">
+    <div class="col-md-6">
+        <img src="{% static 'app1/images/quiz_image.jpg' %}" class="rounded mx-auto d-block" width="650">
 
     </div>
-
+</div>
  </div>
 
 <div class='container-fluid text-center '  style="background-color:lightgray" id="quiz-id">
-    <a class="btn btn-primary float-right" href="{% url 'app1:logoutpage' %}">Logout</a>
-    <h1 > <b> Quiz App Using JavaScript</b></h1>
+<a class="btn btn-primary float-right my-2" href="{% url 'app1:logoutpage' %}">Logout</a>
 
     <hr>
     <div class="row">
         <div class="col-sm-8 border-right border-dark">
+            <h2 > <b> Time : <div id="time-id"> </div></b></h2> 
             <h2 > <b> Progress Report</b></h2>
-
+           
             <div class="progress">
                 <div class="progress-bar progress-bar-striped active" height="20px" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
                 </div>
@@ -71,11 +67,13 @@ y
         </div>
         <div class="col-sm-4">
             <div class="card">
-            <h3>  <b>  Player Name :</b></h3>
+            <h3>  <b>  Player Name :</b></h3><br>
+            <img id="output" width="150" class="rounded mx-auto d-block" />
+
             <h3 id="firstname">First Name :-  </h3>
             <h3 id="lastname">Last Name :-  </h3>
             <h3 id="gendername">Gender :-</h3>
-            <h3 id="datename">Date of Birth :-</h3><br><br><br>
+            <h3 id="datename">Date of Birth :-</h3>
             <a href=""  value="Play Again" onclick="location.reload()" class=" my-3 float-bottom">RESTART  GAME   </a>
          </div>
         </div>
@@ -133,156 +131,54 @@ y
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <script>
+    let QuizDB = [];
+   $.ajax({
+       url : "http://127.0.0.1:8000/quiz?q=true",
+       success: function(data){
+        QuizDB = data;
+        console.log("success q db", QuizDB)
+        loadQuestion();
+       }
+   })
+
+    
+    var loadFile = function(event) {
+        var image = document.getElementById('output');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
+
 $("#quiz-id").hide()
-const QuizDB = [
-    {
-        question: "1)  What is 2+2= ?",
-        correct_answer_values: [
-            "4"
-        ],
-        options_list: [
-            {
-                "display_text": 'Four',
-                'value': '4'
-            },
-            {
-                "display_text": 'Five',
-                'value': '5'
-            },
-            {
-                "display_text": 'Six',
-                'value': '6'
-            },
-            {
-                "display_text": 'Seven',
-                'value': '7'
-            }
-        ],
-        status: 'Skip'
-    },
-    {
-        question: "2)  What is sqrt of 4= ?",
-        correct_answer_values: [
-            "2", "-2"
-        ],
-        options_list: [
-            {
-                "display_text": 'Two',
-                'value': '2'
-            },
-            {
-                "display_text": 'Five',
-                'value': '5'
-            },
-            {
-                "display_text": 'Minus Two',
-                'value': '-2'
-            },
-            {
-                "display_text": 'Seven',
-                'value': '7'
-            }
-        ],
-        status: 'Skip'
 
-    },
-    {
-        question: "3)  What is 2+4= ?",
-        correct_answer_values: [
-            "6"
-        ],
-        options_list: [
-            {
-                "display_text": 'Four',
-                'value': '4'
-            },
-            {
-                "display_text": 'Five',
-                'value': '5'
-            },
-            {
-                "display_text": 'Six',
-                'value': '6'
-            },
-            {
-                "display_text": 'Seven',
-                'value': '7'
-            }
-        ],
-        status: 'Skip'
-    },
-    {
-        question: "4)  What is 2+5= ?",
-        correct_answer_values: [
-            "7"
-        ],
-        options_list: [
-            {
-                "display_text": 'Four',
-                'value': '4'
-            },
-            {
-                "display_text": 'Five',
-                'value': '5'
-            },
-            {
-                "display_text": 'Six',
-                'value': '6'
-            },
-            {
-                "display_text": 'Seven',
-                'value': '7'
-            }
-        ],
-        status: 'Skip'
-    },
-    {
-        question: "5)  What is 1+9= ?",
-        correct_answer_values: [
-            "10"
-        ],
-        options_list: [
-            {
-                "display_text": 'Four',
-                'value': '4'
-            },
-            {
-                "display_text": 'Five',
-                'value': '5'
-            },
-            {
-                "display_text": 'Six',
-                'value': '11'
-            },
-            {
-                "display_text": 'ten',
-                'value': '10'
-            }
-        ],
-        status: 'Skip'
-    },
-    /*} {
-        question: "2)  What is 2+3= ?",
-        lst: [5, 6, 7],
-        ans: "5"
-    },
-    {
-        question: "3)  What is 2+4= ?",
-        lst: [9, 5, 6, 7],
-        ans: "6"
-    },
-    {
-        question: "4)  What is 2+5= ?",
-        lst: [3, 9, 5, 6, 7],
-        ans: "7"
-    },
-    {
-        question: "5)  What is 2+0= ?",
-        lst: [4, 9, 5, 6, 2],
-        ans: "2"
-    } */
+{% comment %} var x=0;
+var timer=setInterval(function(){
+    x+=1;
+    $("#time-id").text(x)
+},1000) {% endcomment %}
+let time;
+const total_time= 60
+let sec = total_time;
+let quiz_spent_time_in_mili_seconds = 0;
+let allowed_quiz_time_in_mili_seconds = 2 * 60 *60 *1000;
 
-]
+let timer = setInterval(function () {
+    quiz_spent_time_in_mili_seconds += 1000
+    if (quiz_spent_time_in_mili_seconds < allowed_quiz_time_in_mili_seconds) {
+        // Allow to run the quiz
+        let remaining_time_in_mili_seconds = allowed_quiz_time_in_mili_seconds - quiz_spent_time_in_mili_seconds
+        let remaining_time_in_seconds = (remaining_time_in_mili_seconds / 1000) % 60;
+        let remaining_time_in_minutes = parseInt((remaining_time_in_mili_seconds / 1000) / 60) % 60;
+        let remaining_time_in_hours = parseInt((remaining_time_in_mili_seconds / 1000) / 60 / 60);
+        let remaining_time_display = remaining_time_in_hours.toString() + ':' + remaining_time_in_minutes.toString() + ':' + remaining_time_in_seconds.toString()
+        $('#time-id').html(remaining_time_display)
+    } else {
+        clearInterval(timer)
+        // Show Time Finished Div
+    }
+}, 1000)
+
+
+
+
 var questtioncount=0;
 
 function getresult(){
@@ -328,6 +224,11 @@ $("#form-id").submit(function(e){
     $("#gendername").text(g)
     var d= $("#date").val()
     $("#datename").text(d)
+    //var d= $("#image-id").val()
+    //$("#image").val(d)
+    $imgsrc = $('#image-id').attr('src');
+    $("#image").attr("src",$imgsrc);
+
     $("#signup-id").hide()
     $("#quiz-id").show()
     e.preventDefault();
@@ -347,32 +248,34 @@ const loadQuestion = ()=>{
         $("#previoussubmit").show()
     }
     let questionlist=QuizDB[questtioncount];
+    console.log("q DB ", QuizDB)
+    console.log("quesion",questtioncount, questionlist)
     let q=questionlist.question;
-    let option_list = questionlist.options_list;
-    let answer_values = questionlist.correct_answer_values;
+    let option_list = questionlist.option_list;
+    let answer_values = questionlist.correct_option;
     $("#radio").empty();
     for(var op of option_list){
         console.log("op => ", op)
     }
+    console.log("8********88888888888888888888", option_list)
     for(var i=0; i<option_list.length;i++){
         if (answer_values.length === 1) {
             // Logic to display radio button
                 $(".question").text(q)
-                let option_txt = `<input type='radio' name='answer_1' value='${option_list[i]['value']}' class='answer' class='float-left'> 
-                <label for='ans1' id='option1'>${option_list[i]['display_text']}</label><br/>`
+                let option_txt = `<input type='radio' name='answer_1' value='${option_list[i]['option_value']}' class='answer' class='float-left'> 
+                <label for='ans1' id='option1'>${option_list[i]['option_text']}</label><br/>`
                 $("#radio").append(option_txt)
             
         } else {
             // Logic to display checkbox
             $(".question").text(q)
-            let option_txt = `<input type='checkbox' name='answer_11' value='${option_list[i]['value']}' class='answer1' class='float-left'> 
-            <label for='ans1' id='option1'>${option_list[i]['display_text']}</label><br/>`
+            let option_txt = `<input type='checkbox' name='answer_11' value='${option_list[i]['option_value']}' class='answer1' class='float-left'> 
+            <label for='ans1' id='option1'>${option_list[i]['option_text']}</label><br/>`
             $("#radio").append(option_txt)
         }
     }
     
 }     
-loadQuestion();
 
     const deselect = () =>{
         answers.forEach((currentans) =>{currentans.checked = false;})
@@ -429,7 +332,9 @@ loadQuestion();
         }
     }
 //this function to used next question and show answer
+
 $('#submit').click(function(e){
+    console.log("buttonnnnnnnnnnnnnnnn")
     if(questtioncount >= QuizDB.length){
         getresult()
         $("#myModal").modal('show')
@@ -440,7 +345,7 @@ $('#submit').click(function(e){
         
 
     let current_question = QuizDB[questtioncount];
-    let checkanswer=getcheckanswer(current_question.correct_answer_values);
+    let checkanswer=getcheckanswer(current_question.answer_values);
     $(".progress-bar").css("width", String((questtioncount+1)*100/QuizDB.length)+'%')
     QuizDB[questtioncount]['status'] = checkanswer
     $("#radio").html("")
@@ -455,5 +360,6 @@ $('#submit').click(function(e){
 });
     
     </script>
-  </body>
-</html>
+
+    {% endblock content %}
+ 

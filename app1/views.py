@@ -10,6 +10,7 @@ import  io
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
+from .models import Quiz_Table, QuizAnswers, QuizCorrectAnswers, QuizQuestions
 
 
 
@@ -21,13 +22,88 @@ from django.views.generic import TemplateView
 from django.contrib.auth import authenticate,login, logout
 
 from app1 import serializers
+from django.http import JsonResponse
 
 
 @login_required(login_url='/')
 def quiz(request):
-    print("------------------quizzzz")
+    print("------------------quizzzz", request.GET)
+    #obj=Quiz_Table.objects.all()
 
-    return render(request,'app1/try.html')
+    """_summary_
+
+    [
+        {
+            'question':'Whats python',
+            'options' : [
+                {
+                    option_text: 'Interpreted language',
+                    option_value: 'Interpreted language',
+                    is_correct: True
+                },
+                {
+                    option_text: 'Like Java',
+                    option_value: 'Like Java',
+                    is_correct: False
+                }
+            ],
+            correct_option: [
+                {
+                    option_text: 'Interpreted language',
+                    option_value: 'Interpreted language',
+                    is_correct: True
+                }
+            ]
+        }
+    ]
+
+    """
+    q = request.GET.get('q')
+    if q:
+        list_of_questions = []
+        quiz_question_objects = QuizQuestions.objects.all()
+        for question_object in quiz_question_objects:
+            temp_dict={
+                'question': '',
+                'option_list' : [],
+                'correct_option':[]
+            }
+            temp_dict['question'] = question_object.question_text
+
+            # Getting All Options
+            option_list = []
+            options=QuizAnswers.objects.filter(question=question_object)
+            for option in options:
+                option_list.append(
+                    {
+                        'option_text': option.answer_text,
+                        'option_value': option.answer_value
+                    }
+                )
+            temp_dict['option_list'] = option_list
+
+            # Getting correct options
+            correct_option_list = []
+            correct_options = options.filter(is_correct=True)
+            for correct_option  in correct_options:
+                correct_option_list.append(
+                    {
+                        'option_text': correct_option.answer_text,
+                        'option_value': correct_option.answer_value
+                    }
+                )
+            
+            temp_dict['correct_option'] = correct_option_list
+
+
+
+            list_of_questions.append(temp_dict)
+        print("list_of_questions => ",list_of_questions)
+        return JsonResponse(list_of_questions, safe=False)
+      
+    
+    return render(request,'app1/try.html',{'obj':[]})
+
 
 
 
@@ -109,6 +185,11 @@ def post_data(request):
 
 def test(request):
     return render(request,'app1/test.html')
+
+
+def quizpy(request):
+    obj=Quiz_Table.objects.all()
+    return render(request,'app1/quizpy.html',{'obj':obj})
 
 
 
