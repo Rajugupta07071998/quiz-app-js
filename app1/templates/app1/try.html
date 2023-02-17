@@ -334,7 +334,6 @@ const loadQuestion = ()=>{
 //this function to used next question and show answer
 
 $('#submit').click(function(e){
-    console.log("buttonnnnnnnnnnnnnnnn")
     if(questtioncount >= QuizDB.length){
         getresult()
         $("#myModal").modal('show')
@@ -345,7 +344,7 @@ $('#submit').click(function(e){
         
 
     let current_question = QuizDB[questtioncount];
-    let checkanswer=getcheckanswer(current_question.answer_values);
+    let checkanswer=getcheckanswer(current_question.correct_option);
     $(".progress-bar").css("width", String((questtioncount+1)*100/QuizDB.length)+'%')
     QuizDB[questtioncount]['status'] = checkanswer
     $("#radio").html("")
